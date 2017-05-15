@@ -2,9 +2,11 @@ import { connect } from 'react-redux'
 import Feed from '../components/Feed'
 
 const mapStateToProps = (state) => {
+  console.log(state.fetchTweetsFeed)
   return {
     tweets: state,
-    searchWord: state.searchWord
+    searchWord: state.searchWord,
+    loading: state.fetchTweetsFeed.loader
   }
 }
 

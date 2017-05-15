@@ -8,37 +8,30 @@ import {
 
 
 
-
-function tweets(state = { isFetching:false, items:[] }, action){
+function fetchTweetsFeed(state={isFetching:false, items:[] },action){
   switch (action.type) {
-    case REQUEST_TWEETS:
-      return Object.assign({},state, {
-        isFetching: true,
-        items: []
-      })
-    case RECIEVED_TWEETS:
-      return Object.assign({},state,{
-        isFetching: false,
-        items: action.tweets,
-      })
-    default:
-      return state
-  }
-}
 
-function fetchTweetsFeed(state={},action){
-  switch (action.type) {
     case RECIEVED_TWEETS:
     let nextState = {}
-    nextState[action.tweet] = tweets(state[action.tweet], action)
+    nextState[action.tweet] = Object.assign({},state,{
+      isFetching: false,
+      items: action.tweets,
+    })
     nextState['searchWord'] = action.tweet
+    nextState['loader'] = ""
       return Object.assign({}, state, nextState)
+
     case REQUEST_TWEETS: {
       let nextState = {}
-      nextState[action.tweet] = tweets(state[action.tweet], action)
+        nextState[action.tweet] = Object.assign({},state, {
+          isFetching: true,
+          items: []
+        })
       nextState['searchWord'] = action.tweet
+      nextState['loader'] = "loader"
       return Object.assign({}, state, nextState)
     }
+
     case REMOVE_TWEET:{
       let nextState = {}
       nextState[action.tweet] = state[state.searchWord].items.splice(action.key,1)

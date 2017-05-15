@@ -1,6 +1,7 @@
 import React, { PropTypes,Component } from 'react';
 import TweetSearch from '../containers/TweetSearch';
 import ShowTweet from '../containers/ShowTweet';
+import Indicator from '../components/Indicator';
 import './Feed.css';
 
 class Feed extends Component {
@@ -15,9 +16,10 @@ class Feed extends Component {
   render(){
     return (
       <div className="container content">
-          <TweetSearch/>
+        <TweetSearch/>
+        <Indicator loader={this.props.loading}/>
         <div className="feed">
-            {this.tweets().map((tweet, i) =>{
+            { this.tweets().map((tweet, i) =>{
               return <ShowTweet key={i} theKey={String(i)} className="card" date={String(tweet.pubDate)} link={String(tweet.link)} description={String(tweet.description)} author={String(tweet.title)}/>
               })}
           </div>
@@ -28,7 +30,8 @@ class Feed extends Component {
 
 Feed.propTypes = {
   tweets: PropTypes.object,
-  searchWord: PropTypes.string
+  searchWord: PropTypes.string,
+  loading: PropTypes.string
 }
 
 export default Feed;
